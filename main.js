@@ -10,14 +10,15 @@ drowTasks();
 function createTask(){
 
     let text = document.getElementById('txt');
+    if (!text.value) return;
+
     let newTask = {};
-   //добавить обработку на ввод пустого поля
     newTask.content = text.value;
     newTask.complited = false;
-    newTask.important = false;
 
     tasks.push(newTask);
     localStorage.setItem('tasks',JSON.stringify(tasks));
+    text.value ='';
     drowTasks();
 }
 
@@ -40,18 +41,19 @@ function addingTasks(item,index){
     tasksplace.prepend(div);
     div.dataset.num = index;
 
-    createButton( div);
+    
     createCheckbox(item, div);
+    createButton( div);
 
 }
 
 function createButton(div){
 
     let button = document.createElement('button');
-    button.onclick = deleteTask;
+    button.addEventListener('click', deleteTask);
     button.classList.add('btn-del');
-    button.innerHTML = 'Удалить';
-    div.append(button);
+    button.innerHTML = 'X';
+    div.prepend(button);
 
 }
 
@@ -61,6 +63,7 @@ function createCheckbox(item, div){
     check.type = 'checkbox';
     check.value = 'выполнено';
     check.classList.add('check');
+    check.addEventListener('click', changeCheck);
 
     if(item.complited){
         check.checked = true;
@@ -70,8 +73,11 @@ function createCheckbox(item, div){
         div.classList.remove('complited');
     }
 
-    check.onclick = changeCheck;
-    div.append(check);
+    let subDiv = document.createElement('div');
+    div.prepend(subDiv);
+    subDiv.innerHTML = "";
+    subDiv.classList.add('sub-div');
+    subDiv.prepend(check);
 
 }
 
@@ -86,7 +92,7 @@ function deleteTask(){
 
 function changeCheck(){
 
-    let index = this.closest('div').dataset.num
+    let index = this.parentElement.parentElement.dataset.num;
     tasks[index].complited = !tasks[index].complited;
 
     let isComplited = [];
