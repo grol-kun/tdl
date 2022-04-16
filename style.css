@@ -1,24 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+
+body{
+    background-color: #f1f1f1;
+    color: #0f141e;
+
+    font-size: 1em;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+}
+
+.header{
+    text-align: center;
+}
+
+.tasksplace{
+    margin: 0 auto;
+}
+
 .task {
     display: block;
     position: relative;
-    margin: 20,10,20,10;
     width: 50%;
+    padding: 15px 20px;
     min-height: 3em;
-    outline: 1px solid red;
-    background-color: rgba(221, 221, 221, 0.848);
-
+    min-width: 300px;
+    max-width: 450px;  
+    border-radius: 20px;
+    background-color: #fff9dc;
+    margin: 20px auto;
 }
+
 .btn-del{
+    display: block;
+    float: right;  
     width: auto;
-    height: auto;
+    height: 20px;
     color: rgb(255, 255, 255);
     background-color: rgb(120, 120, 120);
     
 }
-.check{
-    color: aqua;
+
+.btn-del:hover{
+    background-color: rgb(209, 73, 73);
 }
+
+.sub-div{
+    float: right;
+    position: relative;
+    top: -3px;
+
+    height: 20px;
+    /* right: 0;
+    top: 20px; */
+    display: block;
+}
+
+
+.input-text{
+    width: 200px;
+}
+  
+.check{
+    display: block;
+    height: 20px;
+    width: 20px;
+}
+
+.check:hover{
+    border-radius: 5px;
+    outline: 1.5px solid rgb(53, 183, 47);
+}
+
+
 .complited{
-    background-color: azure;
+    background-color: #e5ffe7;
     opacity: 0.5;
 }
