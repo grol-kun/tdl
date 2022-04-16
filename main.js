@@ -27,12 +27,12 @@ function drowTasks(){
     tasksplace.innerHTML = '';
     if(tasks.length > 0){
         tasks.forEach((item, index)=>{
-            drowing(item, index);
+            addingTasks(item, index);
         })
     }
 }
 
-function drowing(item,index){
+function addingTasks(item,index){
 
     let div = document.createElement('div');
     div.textContent = item.content;
@@ -40,12 +40,22 @@ function drowing(item,index){
     tasksplace.prepend(div);
     div.dataset.num = index;
 
-    createButton(index, div);
-/*     let button = document.createElement('button');
+    createButton( div);
+    createCheckbox(item, div);
+
+}
+
+function createButton(div){
+
+    let button = document.createElement('button');
     button.onclick = deleteTask;
     button.classList.add('btn-del');
     button.innerHTML = 'Удалить';
-    div.append(button); */
+    div.append(button);
+
+}
+
+function createCheckbox(item, div){
 
     let check = document.createElement('input');
     check.type = 'checkbox';
@@ -65,28 +75,33 @@ function drowing(item,index){
 
 }
 
-function createButton(index, div){
-
-    let button = document.createElement('button');
-    button.onclick = deleteTask;
-    button.classList.add('btn-del');
-    button.innerHTML = 'Удалить';
-/*     let div = document.querySelectorAll(`data-num="${index}"`);
-    console.log(div); */
-    div.append(button);
-}
-
 function deleteTask(){
     
     let index = this.closest('div').dataset.num;
     tasks.splice(index,1);
     localStorage.setItem('tasks',JSON.stringify(tasks));
     drowTasks();
+
 }
 
 function changeCheck(){
+
     let index = this.closest('div').dataset.num
     tasks[index].complited = !tasks[index].complited;
+
+    let isComplited = [];
+    let isNotComplited = [];
+
+    for (let i = 0; i < tasks.length; i++ ){
+        if(tasks[i].complited){
+            isComplited.push(tasks[i]);
+        }else{
+            isNotComplited.push(tasks[i]);
+        }
+    }
+    tasks = [...isComplited,...isNotComplited];
+
     localStorage.setItem('tasks',JSON.stringify(tasks));
     drowTasks();
+
 }
