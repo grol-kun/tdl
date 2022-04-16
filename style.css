@@ -1,0 +1,24 @@
+.task {
+    display: block;
+    position: relative;
+    margin: 20,10,20,10;
+    width: 50%;
+    min-height: 3em;
+    outline: 1px solid red;
+    background-color: rgba(221, 221, 221, 0.848);
+
+}
+.btn-del{
+    width: auto;
+    height: auto;
+    color: rgb(255, 255, 255);
+    background-color: rgb(120, 120, 120);
+    
+}
+.check{
+    color: aqua;
+}
+.complited{
+    background-color: azure;
+    opacity: 0.5;
+}
