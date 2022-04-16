@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
     <link rel="stylesheet" href = "style.css">
+   
 </head>
 <body>
-  <h1>ToDoList</h1>
+  <header class="header">
+    <h1>ToDoList</h1>
+    
+    <form>
+        <input type="text" id="txt" class="input-text">
+        <input type="button" id="btn-add" value="Добавить">
+    </form>
+  </header>
   
-  <form>
-      <input type="text" id="txt">
-      <input type="button" id="btn-add" value="Добавить">
-  </form>
   <hr>
-  <div id="tasksplace"></div>
-
+  
+  <div id="tasksplace" class="tasksplace"></div>
 
   <script src="main.js"></script>
 </body>
