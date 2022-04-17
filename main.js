@@ -14,6 +14,7 @@ function createTask(){
     let newTask = {};
     newTask.content = text.value;
     newTask.complited = false;
+    newTask.important = false;
    
     let tasks = JSON.parse(localStorage.getItem('tasks')) ? JSON.parse(localStorage.getItem('tasks')) : [] ; 
     tasks.push(newTask);
@@ -44,6 +45,22 @@ function creatingElements(item,index){
     
     createCheckbox(item, div);
     createButtonDel( div);
+    createImportantIcon(item, div);
+}
+
+function createImportantIcon(item, div){
+    let subDiv = document.createElement('div');
+    subDiv.classList.add('icon');
+    subDiv.addEventListener('click', changeImportance);
+
+    if(item.important){
+        subDiv.classList.add('imp');
+        div.classList.add('important');
+    }else{
+        subDiv.classList.add('not-imp');
+    }
+
+    div.prepend(subDiv);
 }
 
 function createCheckbox(item, div){
@@ -80,24 +97,38 @@ function deleteTask(){
     drowTasks();
 }
 
+function changeImportance(){
+    let index = this.parentElement.dataset.num;
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+    tasks[index].important = !tasks[index].important;
+
+    change(tasks);
+}
+
 function changeCheck(){
     let index = this.parentElement.parentElement.dataset.num;
     let tasks = JSON.parse(localStorage.getItem('tasks'));
     tasks[index].complited = !tasks[index].complited;
 
+   change(tasks);
+}
+
+function change(tasks){
+    let isImportant = [];
     let isComplited = [];
     let isNotComplited = [];
 
-    for (let i = 0; i < tasks.length; i++ ){
+    for(let i = 0; i < tasks.length; i++){
         if(tasks[i].complited){
-            isComplited.push(tasks[i]);
-        }else{
+        isComplited.push(tasks[i]);
+        }else if(tasks[i].important){
+            isImportant.push(tasks[i]);
+        }else if(!tasks[i].complited){
             isNotComplited.push(tasks[i]);
         }
     }
 
-    tasks = [...isComplited,...isNotComplited];
-
+    tasks = [...isComplited,...isNotComplited,...isImportant];
     localStorage.setItem('tasks',JSON.stringify(tasks));
     drowTasks();
 }
