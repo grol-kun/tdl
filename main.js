@@ -21,6 +21,7 @@ function createTask(){
     localStorage.setItem('tasks',JSON.stringify(tasks));
 
     text.value ='';
+    change(tasks);
     drowTasks();
 }
 
