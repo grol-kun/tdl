@@ -3,6 +3,8 @@
 const buttonAdd = document.getElementById('btn-add');
 const tasksPlace = document.getElementById('tasksplace');
 
+document.addEventListener('keydown', (event)=>{if(event.code === 'Enter') createTask();});
+document.addEventListener('DOMContentLoaded', setFocus);
 buttonAdd.addEventListener('click', createTask);
 
 drowTasks();
@@ -23,6 +25,7 @@ function createTask(){
     text.value ='';
     change(tasks);
     drowTasks();
+    setFocus();
 }
 
 function drowTasks(){
@@ -132,4 +135,9 @@ function change(tasks){
     tasks = [...isComplited,...isNotComplited,...isImportant];
     localStorage.setItem('tasks',JSON.stringify(tasks));
     drowTasks();
+}
+
+function setFocus(){
+   let txt = document.getElementById('txt');
+   txt.focus();
 }
