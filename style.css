@@ -58,19 +58,19 @@ body{
 
 .icon{
     position:absolute;
-    top: -10px;
-    left: -10px;
-    width: 32px;
-    height: 32px;
+    top: -8px;
+    left: -8px;
+    width: 24px;
+    height: 24px;
 
 }
 .icon.imp{
     cursor: pointer;
-    background: url(star_2.png);  
+    background: url(star24px_2.png);  
 }
 .icon.not-imp{
     cursor: pointer;
-    background: url(star_1.png);  
+    background: url(star24px_1.png);  
 }
 
 .important{
