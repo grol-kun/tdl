@@ -1,5 +1,3 @@
-'use strict';
-
 const buttonAdd = document.getElementById('btn-add');
 const tasksPlace = document.getElementById('tasksplace');
 
@@ -86,16 +84,15 @@ function createCheckbox(item, div){
 }
 
 function createButtonDel(div){
-    let button = document.createElement('button');
-    button.addEventListener('click', deleteTask);
-    button.classList.add('btn-del');
-    button.innerHTML = 'X';
-    div.prepend(button);
+    let subDiv = document.createElement('div');
+    subDiv.classList.add('btn-del');
+    subDiv.addEventListener('click', deleteTask);
+    div.prepend(subDiv);
 }
 
 function deleteTask(){
     let tasks = JSON.parse(localStorage.getItem('tasks'));
-    let index = this.closest('div').dataset.num;
+    let index = this.parentElement.dataset.num; 
     tasks.splice(index,1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
     drowTasks();
