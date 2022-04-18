@@ -35,16 +35,16 @@ body{
 
 .btn-del{
     display: block;
+    margin: 0px 0px 0px 5px;
     float: right;  
-    width: auto;
+    width: 20px;
     height: 20px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(120, 120, 120);
+    background: url(cross_del.png);
     cursor: pointer;
 }
 
 .btn-del:hover{
-    background-color: rgb(209, 73, 73);
+   background: url(cross_del_red.png);
 }
 
 .sub-div{
