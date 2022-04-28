@@ -27,7 +27,6 @@ function createTask() {
   text.value = "";
   change(tasks);
   drowTasks();
-  setFocus();
 }
 
 function drowTasks() {
@@ -42,6 +41,7 @@ function drowTasks() {
       creatingElements(item, index);
     });
   }
+  setFocus();
 }
 
 function creatingElements(item, index) {
