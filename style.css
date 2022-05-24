@@ -39,12 +39,12 @@ body{
     float: right;  
     width: 20px;
     height: 20px;
-    background: url(cross_del.png);
+    background: url(css/cross_del.png);
     cursor: pointer;
 }
 
 .btn-del:hover{
-   background: url(cross_del_red.png);
+   background: url(css/cross_del_red.png);
 }
 
 .sub-div{
@@ -66,11 +66,11 @@ body{
 }
 .icon.imp{
     cursor: pointer;
-    background: url(star24px_2.png);  
+    background: url(css/star24px_2.png);  
 }
 .icon.not-imp{
     cursor: pointer;
-    background: url(star24px_1.png);  
+    background: url(css/star24px_1.png);  
 }
 
 .important{
