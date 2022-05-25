@@ -2,8 +2,6 @@ import { Drawer } from './drawer.js';
 
 export const initial = {
   init() {
-    //const drawer = new Drawer();
-
     const buttonAdd = document.getElementById('btn-add');
     document.addEventListener('DOMContentLoaded', Drawer.setFocus.bind(Drawer));
     document.addEventListener('keydown', (event) => {

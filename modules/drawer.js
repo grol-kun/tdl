@@ -1,10 +1,10 @@
 import { Storage } from './storage.js';
 
 export class Drawer {
-  static pointer = 'tasks';
+  static data = 'tasks';
   static drawTasks() {
     const tasksPlace = document.getElementById('tasksplace');
-    const tasks = Storage.get(this.pointer);
+    const tasks = Storage.get(this.data);
     tasksPlace.innerHTML = '';
 
     if (tasks.length > 0) {
@@ -12,14 +12,14 @@ export class Drawer {
         .sort((a, b) => Number(a.important) - Number(b.important))
         .sort((a, b) => Number(b.complited) - Number(a.complited))
         .forEach((item, index) => {
-          this.creatingElements(item, index, tasksPlace);
+          this.creatingElements(item, tasksPlace);
         });
     }
 
     this.setFocus();
   }
 
-  static creatingElements(item, index, tasksPlace) {
+  static creatingElements(item, tasksPlace) {
     const div = document.createElement('div');
     div.textContent = item.content;
     div.classList.add('task');
@@ -80,7 +80,7 @@ export class Drawer {
   static createTask() {
     const entity = this.create();
     if (entity) {
-      const tasks = Storage.add(this.pointer, entity);
+      const tasks = Storage.add(this.data, entity);
       const text = document.getElementById('txt');
       text.value = '';
       this.change(tasks);
@@ -101,13 +101,13 @@ export class Drawer {
   }
 
   static deleteTask(index) {
-    Storage.delete(this.pointer, index);
+    Storage.delete(this.data, index);
     this.drawTasks();
   }
 
   static changeImportance(subDiv) {
     const index = +subDiv.parentElement.dataset.index;
-    const tasks = Storage.get(this.pointer);
+    const tasks = Storage.get(this.data);
     const task = tasks.find((i) => i.uid === index);
     task.important = !task.important;
     this.change(task);
@@ -115,14 +115,14 @@ export class Drawer {
 
   static changeCheck(check) {
     const index = +check.parentElement.parentElement.dataset.index;
-    const tasks = Storage.get(this.pointer);
+    const tasks = Storage.get(this.data);
     const task = tasks.find((i) => i.uid === index);
     task.complited = !task.complited;
     this.change(task);
   }
 
   static change(entity) {
-    Storage.update(this.pointer, entity);
+    Storage.update(this.data, entity);
     this.drawTasks();
   }
 }
