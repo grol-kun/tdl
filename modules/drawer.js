@@ -9,8 +9,8 @@ export class Drawer {
 
     if (tasks.length > 0) {
       tasks
-        .sort((a, b) => Number(b.complited) - Number(a.complited))
         .sort((a, b) => Number(a.important) - Number(b.important))
+        .sort((a, b) => Number(b.complited) - Number(a.complited))
         .forEach((item, index) => {
           this.creatingElements(item, index, tasksPlace);
         });
