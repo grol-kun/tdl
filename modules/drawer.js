@@ -1,17 +1,17 @@
 import { Storage } from './storage.js';
 
 export class Drawer {
-  static data = 'tasks';
+  static dataName = 'tasks';
   static drawTasks() {
     const tasksPlace = document.getElementById('tasksplace');
-    const tasks = Storage.get(this.data);
+    const tasks = Storage.get(this.dataName);
     tasksPlace.innerHTML = '';
 
     if (tasks.length > 0) {
       tasks
         .sort((a, b) => Number(a.important) - Number(b.important))
         .sort((a, b) => Number(b.complited) - Number(a.complited))
-        .forEach((item, index) => {
+        .forEach((item) => {
           this.creatingElements(item, tasksPlace);
         });
     }
@@ -53,7 +53,7 @@ export class Drawer {
     const subDiv = document.createElement('div');
     subDiv.classList.add('btn-del');
     div.prepend(subDiv);
-    const index = subDiv.parentElement.dataset.index;
+    const index = +subDiv.parentElement.dataset.index; // +
     subDiv.addEventListener('click', this.deleteTask.bind(this, index));
   }
 
@@ -77,10 +77,10 @@ export class Drawer {
     txt.focus();
   }
 
-  static createTask() {
+  static addTask() {
     const entity = this.create();
     if (entity) {
-      const tasks = Storage.add(this.data, entity);
+      const tasks = Storage.add(this.dataName, entity);
       const text = document.getElementById('txt');
       text.value = '';
       this.change(tasks);
@@ -101,13 +101,13 @@ export class Drawer {
   }
 
   static deleteTask(index) {
-    Storage.delete(this.data, index);
+    Storage.delete(this.dataName, index);
     this.drawTasks();
   }
 
   static changeImportance(subDiv) {
     const index = +subDiv.parentElement.dataset.index;
-    const tasks = Storage.get(this.data);
+    const tasks = Storage.get(this.dataName);
     const task = tasks.find((i) => i.uid === index);
     task.important = !task.important;
     this.change(task);
@@ -115,14 +115,14 @@ export class Drawer {
 
   static changeCheck(check) {
     const index = +check.parentElement.parentElement.dataset.index;
-    const tasks = Storage.get(this.data);
+    const tasks = Storage.get(this.dataName);
     const task = tasks.find((i) => i.uid === index);
     task.complited = !task.complited;
     this.change(task);
   }
 
   static change(entity) {
-    Storage.update(this.data, entity);
+    Storage.update(this.dataName, entity);
     this.drawTasks();
   }
 }
