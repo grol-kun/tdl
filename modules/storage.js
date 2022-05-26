@@ -13,14 +13,14 @@ export class Storage {
   }
 
   static delete(targetName, uid) {
-    const entities = this.get(targetName).filter((item) => item.uid != uid);
-    localStorage.setItem(targetName, JSON.stringify(entities));
+    const list = this.get(targetName).filter((item) => item.uid != uid);
+    localStorage.setItem(targetName, JSON.stringify(list));
   }
 
   static update(targetName, entity) {
-    const entities = this.get(targetName);
-    const targetEntityIndex = entities.findIndex((item) => item.uid == entity.uid);
-    entities[targetEntityIndex] = { ...entity };  //что это?
-    localStorage.setItem(targetName, JSON.stringify(entities));
+    const list = this.get(targetName);
+    const targetEntityIndex = list.findIndex((item) => item.uid == entity.uid);
+    list[targetEntityIndex] = { ...entity }; 
+    localStorage.setItem(targetName, JSON.stringify(list));
   }
 }
