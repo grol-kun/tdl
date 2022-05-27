@@ -70,12 +70,12 @@ export class Drawer {
     this.columns.forEach((col) => {
       let column = document.getElementById(col);
       maxHeight = Math.max(column.offsetHeight, maxHeight);
-      //console.log(maxHeight);
+        console.log(maxHeight); //
     });
     this.columns.forEach((col) => {
       let column = document.getElementById(col);
       column.style.height = maxHeight + 'px';
-      //console.log(column.style.height, maxHeight);
+        console.log(column.style.height, maxHeight); //
     });
   }
 

@@ -7,7 +7,8 @@ export class Drag_n_Drop {
   static do(event) {
     let dragElement = event.target.closest('.draggable');
     if (!dragElement) return;
-    dragElement.style.Zindex = 1000;
+                dragElement.style.zIndex = 1000;
+                console.log(dragElement);
     event.preventDefault();
     dragElement.ondragstart = function () {
       return false;

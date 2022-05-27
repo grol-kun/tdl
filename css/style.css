@@ -8,15 +8,12 @@ body {
 }
 .board{
 
-    height: inherit;
+    /* height: inherit; */
     border: solid teal 1px;
     /* height: 100% !important;  */
 
 }
 
-.currentDroppable{
-    background-color: #bc4450;
-}
 .card {
     min-width: 20vw;
     padding: 0px;
@@ -24,8 +21,8 @@ body {
 }
 /* .row-board{
     min-height: 100%;
-} */
-/* #row-board{
+}
+#row-board{
     height: 1px;
     min-height: 100vh;
 } */
