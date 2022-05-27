@@ -14,7 +14,7 @@ export const initial = {
 
     const input = document.getElementById('txt');
     input.addEventListener('input', (event) => {
-      buttonAdd.disabled = event.target.value.length < 3 ? true : false;
+      buttonAdd.disabled = event.target.value.length < 3;
     });
 
     document.addEventListener('mousedown', DragDrop.do.bind(DragDrop));

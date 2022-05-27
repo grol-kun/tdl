@@ -65,9 +65,9 @@ export class Drawer {
     let entity = null;
     this.columns.forEach((col) => {
       if (currentDroppable.getAttribute('id') == col) {
-        const uid = dragElement.getAttribute('uid');
+        const uid = +dragElement.getAttribute('uid');
         const list = Storage.get(this.dataName);
-        entity = list.find((item) => item.uid == uid);
+        entity = list.find((item) => item.uid === uid);
         entity.status = col;
         this.change(entity);
       } else if (currentDroppable.classList.contains('bin')) {
