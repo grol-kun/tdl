@@ -48,35 +48,17 @@ export class Drawer {
           column.innerHTML += this.createTemplate(item, index, count);
         }
       });
-      if (!count) {
-        column.innerHTML = this.createEmptyTemplate(count);
-      }
     });
-    this.drowColumns();
   }
 
   static createTemplate(task, index, count) {
-    return `<div class="col draggable card" uid="${task.uid}" id="${count}" style="padding-left: 0px;padding-right: 0px;"><div class="card-panel teal" style="margin-bottom: 0px;margin-top: 0px;">
-      <span class="white-text">${task.description} </span>
-      </div></div>`;
-  }
-
-  static createEmptyTemplate(count) {
-    return `<div></br></div>`;
-  }
-
-  static drowColumns() {
-    let maxHeight = 0;
-    this.columns.forEach((col) => {
-      let column = document.getElementById(col);
-      maxHeight = Math.max(column.offsetHeight, maxHeight);
-        console.log(maxHeight); //
-    });
-    this.columns.forEach((col) => {
-      let column = document.getElementById(col);
-      column.style.height = maxHeight + 'px';
-        console.log(column.style.height, maxHeight); //
-    });
+    return `
+      <div class="col draggable card" uid="${task.uid}" id="${count}" style="padding-left: 0px;padding-right: 0px;">
+        <div class="card-panel teal" style="margin-bottom: 0px;margin-top: 0px;">
+          <span class="white-text">${task.description}</span>
+        </div>
+      </div>
+    `;
   }
 
   static finish(dragElement, currentDroppable) {

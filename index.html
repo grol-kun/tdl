@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToDoList</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  </head>
 
-  <body>
-    <div class="container #fafafa grey lighten-5">
-      <header class="header">
-        <h1 class="card-panel teal lighten-2 center-align">Tasks progress tracker</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDoList</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
 
-        <form>
-          <div class="row">
-            <div class="input-field col s4 offset-s3">
-              <input value="" id="txt" type="text" class="input-text" />
-              <label class="active" for="txt">Add new task</label>
-            </div>
-            <div class="input-field col s2">
-              <a class="btn-floating btn-medium waves-effect waves-light red" id="btn-add"><i class="material-icons">add</i></a>
-            </div>
-            <div class="input-field col s2 bin droppable" style="margin-top: 5px;">
-             <!--  <img src="css/delete_black_48dp.svg" alt="trash-bin" class="bin droppable"> -->
-              <i class="medium material-icons bin droppable">delete</i>
-            </div>
-          </div>
-        </form>
-      </header>
-
-      <div class="row">
-        <div class="col s4 teal lighten-2 center-align">To Do</div>
-        <div class="col s4 teal lighten-2 center-align">In Process</div>
-        <div class="col s4 teal lighten-2 center-align">Already Done</div>
-      </div>
-
-      <div class="row row-board" id="row-board">
-        <!-- TODO -->
-        <div class="col s4 #fafafa grey lighten-5 board droppable" id="todo"></div>
-        <!-- PROCESS -->
-        <div class="col s4 #fafafa grey lighten-5 board droppable" id="process"></div>
-        <!-- DONE -->
-        <div class="col s4 #fafafa grey lighten-5 board droppable" id="done"></div>
-      </div>
+<body>
+  <div class="container #fafafa grey lighten-5">
+    <div class="header">
+      <h1 class="card-panel teal lighten-2 center-align">Tasks progress tracker</h1>
     </div>
 
-    <script type="module" src="./main.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  </body>
+    <div class="content">
+      <form>
+        <div class="row">
+          <div class="input-field col s4 offset-s3">
+            <input value="" id="txt" type="text" class="input-text" />
+            <label class="active" for="txt">Add new task</label>
+          </div>
+
+          <div class="input-field col s2">
+            <button class="btn-floating btn-medium waves-effect waves-light red" id="btn-add" disabled>
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+
+          <div class="input-field col s2 bin droppable" style="margin-top: 5px;">
+            <!--  <img src="css/delete_black_48dp.svg" alt="trash-bin" class="bin droppable"> -->
+            <i class="medium material-icons bin droppable">delete</i>
+          </div>
+        </div>
+      </form>
+
+      <div class="table">
+        <div class="table-header row">
+          <div class="col s4 teal lighten-2 center-align">To Do</div>
+          <div class="col s4 teal lighten-2 center-align">In Process</div>
+          <div class="col s4 teal lighten-2 center-align">Already Done</div>
+        </div>
+
+        <div class="table-content row row-board" id="row-board">
+          <!-- TODO -->
+          <div class="col s4 #fafafa grey lighten-5 board droppable" id="todo"></div>
+          <!-- PROCESS -->
+          <div class="col s4 #fafafa grey lighten-5 board droppable" id="process"></div>
+          <!-- DONE -->
+          <div class="col s4 #fafafa grey lighten-5 board droppable" id="done"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
 </html>

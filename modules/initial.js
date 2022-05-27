@@ -8,7 +8,11 @@ export const initial = {
 
     //document.addEventListener('DOMContentLoaded', Drawer.setFocus.bind(Drawer));
     document.addEventListener('keydown', (event) => {
-      if (event.code === 'Enter') Drawer.addTask();
+      // enable / disable when value is equal to 3 chars
+
+      if (event.code === 'Enter') {
+        Drawer.addTask();
+      }
     });
 
     document.addEventListener('mousedown', Drag_n_Drop.do.bind(Drag_n_Drop)); //add event если что
