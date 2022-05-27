@@ -9,7 +9,6 @@ class Task {
 
 export class Drawer {
   static dataName = 'tasks';
-  static drawTasks() {}
   static columns = ['todo', 'process', 'done'];
 
   static addTask() {
@@ -68,40 +67,32 @@ export class Drawer {
 
   static drowColumns() {
     let maxHeight = 0;
-    this.columns.forEach((col)=>{
+    this.columns.forEach((col) => {
       let column = document.getElementById(col);
       maxHeight = Math.max(column.offsetHeight, maxHeight);
       //console.log(maxHeight);
-    })
-    this.columns.forEach((col)=>{
+    });
+    this.columns.forEach((col) => {
       let column = document.getElementById(col);
-      column.style.height = maxHeight+'px';
+      column.style.height = maxHeight + 'px';
       //console.log(column.style.height, maxHeight);
-    })
-
+    });
   }
 
   static finish(dragElement, currentDroppable) {
     let entity = null;
-    this.columns.forEach((col)=>{
-      if (currentDroppable.getAttribute('id') == col){
-          console.log(dragElement.getAttribute('uid')); //1
+    this.columns.forEach((col) => {
+      if (currentDroppable.getAttribute('id') == col) {
         const uid = dragElement.getAttribute('uid');
-          console.log(uid); //2
         const list = Storage.get(this.dataName);
-          console.log(list); //3
-        entity = list.find(item=>item.uid == uid);
-            console.log(entity); //3
+        entity = list.find((item) => item.uid == uid);
         entity.status = col;
-        //console.log(list);
         this.change(entity);
+      } else if (currentDroppable.classList.contains('bin')) {
+        const uid = +dragElement.getAttribute('uid');
+        Storage.delete(this.dataName, uid);
+        this.drawTasks();
       }
-    })
-
-    
+    });
   }
-
-
-
-
 }
