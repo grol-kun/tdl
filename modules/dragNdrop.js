@@ -3,7 +3,7 @@ import { Drawer } from "./drawer.js";
 let isDragging = false;
 let currentDroppable = null;
 
-export class Drag_n_Drop {
+export class DragDrop {
   static do(event) {
     let dragElement = event.target.closest('.draggable');
     if (!dragElement) return;

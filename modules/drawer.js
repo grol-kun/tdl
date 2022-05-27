@@ -53,8 +53,8 @@ export class Drawer {
 
   static createTemplate(task, index, count) {
     return `
-      <div class="col draggable card" uid="${task.uid}" id="${count}" style="padding-left: 0px;padding-right: 0px;">
-        <div class="card-panel teal" style="margin-bottom: 0px;margin-top: 0px;">
+      <div class="col draggable card " uid="${task.uid}" id="${count}">
+        <div class="card-panel teal ${task.status}" >
           <span class="white-text">${task.description}</span>
         </div>
       </div>
