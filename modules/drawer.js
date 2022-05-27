@@ -1,81 +1,16 @@
 import { Storage } from './storage.js';
 
+class Task {
+  constructor(description) {
+    this.description = description;
+    this.status = 'todo';
+  }
+}
+
 export class Drawer {
   static dataName = 'tasks';
-  static drawTasks() {
-    const tasksPlace = document.getElementById('tasksplace');
-    const tasks = Storage.get(this.dataName);
-    tasksPlace.innerHTML = '';
-
-    if (tasks.length > 0) {
-      tasks
-        .sort((a, b) => Number(a.important) - Number(b.important))
-        .sort((a, b) => Number(b.complited) - Number(a.complited))
-        .forEach((item) => {
-          this.creatingElements(item, tasksPlace);
-        });
-    }
-
-    this.setFocus();
-  }
-
-  static creatingElements(item, tasksPlace) {
-    const div = document.createElement('div');
-    div.textContent = item.content;
-    div.classList.add('task');
-    tasksPlace.prepend(div);
-    div.dataset.index = item.uid;
-
-    this.createCheckbox(item, div);
-    this.createButtonDel(div);
-    this.createImportantIcon(item, div);
-  }
-
-  static createCheckbox(item, div) {
-    const check = document.createElement('input');
-    check.type = 'checkbox';
-    check.classList.add('check');
-    check.addEventListener('click', this.changeCheck.bind(this, check));
-
-    if (item.complited) {
-      check.checked = true;
-      div.classList.add('complited');
-    }
-
-    const subDiv = document.createElement('div');
-    div.prepend(subDiv);
-    subDiv.innerHTML = '';
-    subDiv.classList.add('sub-div');
-    subDiv.prepend(check);
-  }
-
-  static createButtonDel(div) {
-    const subDiv = document.createElement('div');
-    subDiv.classList.add('btn-del');
-    div.prepend(subDiv);
-    const index = +subDiv.parentElement.dataset.index; // +
-    subDiv.addEventListener('click', this.deleteTask.bind(this, index));
-  }
-
-  static createImportantIcon(item, div) {
-    const subDiv = document.createElement('div');
-    subDiv.classList.add('icon');
-    subDiv.addEventListener('click', this.changeImportance.bind(this, subDiv));
-
-    if (item.important) {
-      subDiv.classList.add('imp');
-      div.classList.add('important');
-    } else {
-      subDiv.classList.add('not-imp');
-    }
-
-    div.prepend(subDiv);
-  }
-
-  static setFocus() {
-    const txt = document.getElementById('txt');
-    txt.focus();
-  }
+  static drawTasks() {}
+  static columns = ['todo', 'process', 'done'];
 
   static addTask() {
     const entity = this.create();
@@ -84,7 +19,7 @@ export class Drawer {
       const text = document.getElementById('txt');
       text.value = '';
       this.change(tasks);
-      this.drawTasks();
+      this.drawTasks(); //?
     } else {
       return;
     }
@@ -93,36 +28,80 @@ export class Drawer {
   static create() {
     const text = document.getElementById('txt');
     if (!text.value) return;
-    const entity = {};
-    entity.content = text.value;
-    entity.complited = false;
-    entity.important = false;
-    return entity;
-  }
-
-  static deleteTask(index) {
-    Storage.delete(this.dataName, index);
-    this.drawTasks();
-  }
-
-  static changeImportance(subDiv) {
-    const index = +subDiv.parentElement.dataset.index;
-    const tasks = Storage.get(this.dataName);
-    const task = tasks.find((i) => i.uid === index);
-    task.important = !task.important;
-    this.change(task);
-  }
-
-  static changeCheck(check) {
-    const index = +check.parentElement.parentElement.dataset.index;
-    const tasks = Storage.get(this.dataName);
-    const task = tasks.find((i) => i.uid === index);
-    task.complited = !task.complited;
-    this.change(task);
+    return new Task(text.value);
   }
 
   static change(entity) {
     Storage.update(this.dataName, entity);
-    this.drawTasks();
+    this.drawTasks(); //?
   }
+
+  static drawTasks() {
+    this.columns.forEach((col) => {
+      let column = document.getElementById(col);
+      column.innerHTML = '';
+      const tasks = Storage.get(this.dataName);
+      if (!tasks) return;
+      let count = 0;
+      tasks.forEach((item, index) => {
+        if (item.status == col) {
+          count++;
+          column.innerHTML += this.createTemplate(item, index, count);
+        }
+      });
+      if (!count) {
+        column.innerHTML = this.createEmptyTemplate(count);
+      }
+    });
+    this.drowColumns();
+  }
+
+  static createTemplate(task, index, count) {
+    return `<div class="col draggable card" uid="${task.uid}" id="${count}" style="padding-left: 0px;padding-right: 0px;"><div class="card-panel teal" style="margin-bottom: 0px;margin-top: 0px;">
+      <span class="white-text">${task.description} </span>
+      </div></div>`;
+  }
+
+  static createEmptyTemplate(count) {
+    return `<div></br></div>`;
+  }
+
+  static drowColumns() {
+    let maxHeight = 0;
+    this.columns.forEach((col)=>{
+      let column = document.getElementById(col);
+      maxHeight = Math.max(column.offsetHeight, maxHeight);
+      //console.log(maxHeight);
+    })
+    this.columns.forEach((col)=>{
+      let column = document.getElementById(col);
+      column.style.height = maxHeight+'px';
+      //console.log(column.style.height, maxHeight);
+    })
+
+  }
+
+  static finish(dragElement, currentDroppable) {
+    let entity = null;
+    this.columns.forEach((col)=>{
+      if (currentDroppable.getAttribute('id') == col){
+          console.log(dragElement.getAttribute('uid')); //1
+        const uid = dragElement.getAttribute('uid');
+          console.log(uid); //2
+        const list = Storage.get(this.dataName);
+          console.log(list); //3
+        entity = list.find(item=>item.uid == uid);
+            console.log(entity); //3
+        entity.status = col;
+        //console.log(list);
+        this.change(entity);
+      }
+    })
+
+    
+  }
+
+
+
+
 }
