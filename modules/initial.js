@@ -17,6 +17,8 @@ export const initial = {
       buttonAdd.disabled = event.target.value.length < 3;
     });
 
+    //document.addEventListener('DOMContentLoaded', Drawer.setFocus.bind(Drawer));
+
     document.addEventListener('mousedown', DragDrop.do.bind(DragDrop));
 
     Drawer.drawTasks();
