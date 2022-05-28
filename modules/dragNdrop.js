@@ -33,7 +33,6 @@ export class DragDrop {
     dragElement.style.position = 'fixed';
     document.removeEventListener('mousemove', this.onMouseMoveBound);
     dragElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
-    console.log(document, 'сняли');
   }
 
   static startDrag(clientX, clientY) {
@@ -43,7 +42,6 @@ export class DragDrop {
     isDragging = true;
     document.addEventListener('mousemove', this.onMouseMoveBound);
     dragElement.addEventListener('mouseup', this.onMouseUp.bind(this));
-    console.log(document, 'поствили');
     this.shiftX = clientX - dragElement.getBoundingClientRect().left;
     this.shiftY = clientY - dragElement.getBoundingClientRect().top;
     dragElement.style.position = 'fixed';
