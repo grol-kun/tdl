@@ -19,16 +19,6 @@ export const initial = {
 
     document.addEventListener('mousedown', DragDrop.do.bind(DragDrop));
 
-    const header = document.getElementById('myHeader');
-    let sticky = header.offsetTop;
-    window.onscroll = function () {
-      if (window.pageYOffset >= sticky) {
-        header.classList.add('sticky');
-      } else {
-        header.classList.remove('sticky');
-      }
-    };
-
     Drawer.drawTasks();
   },
 };

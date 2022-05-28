@@ -72,9 +72,14 @@
  .teal.process{
     background-color: #ffcc80 !important;
  }
- .sticky {
-    position: fixed;
+
+  #myHeader{
+    position: sticky;
     top: 0;
-    width: 100%;
-    z-index: 1000;
+    z-index: 999;
+  }
+  .row.input {
+    background-color: #fafafa;
+    margin-bottom: 0;
+    padding-bottom: 20px;
   }
