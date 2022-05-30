@@ -30,8 +30,6 @@ export class DragDrop {
       return;
     }
     isDragging = false;
-    /* dragElement.style.top = parseInt(dragElement.style.top) + pageYOffset + 'px';
-    dragElement.style.position = 'fixed'; */
     document.removeEventListener('mousemove', this.onMouseMoveBound);
     dragElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
   }
@@ -113,8 +111,6 @@ export class DragDrop {
   }
 
   static getCurrentY() {
-    /* console.log(this);
-    console.log(this.shiftY); */
     return this.shiftY;
   }
 }

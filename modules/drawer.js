@@ -32,7 +32,7 @@ export class Drawer {
 
   static drawTasks() {
     this.columns.forEach((col) => {
-       console.log(`-----------Список ${col}------------`);
+      console.log(`-----------Список ${col}------------`);
       let column = document.getElementById(col);
       column.innerHTML = '';
       const tasks = Storage.get(col);
@@ -67,35 +67,15 @@ export class Drawer {
       if (currentDroppable.getAttribute('id') == dragElement.getAttribute('data-status')) {
         if (drawn) return;
         this.setPosition(dragElement, currentDroppable, oldStatus);
-        this.drawTasks();
         drawn = true;
       } else if (currentDroppable.getAttribute('id') == col) {
         this.setPosition(dragElement, currentDroppable, oldStatus);
-        this.drawTasks();
       } else if (currentDroppable.classList.contains('bin')) {
         const uid = +dragElement.getAttribute('uid');
         Storage.delete(dragElement.getAttribute('data-status'), uid);
         this.drawTasks();
       }
     });
-  }
-
-  static change(entity, oldLocation, newLocation) {
-    Storage.add(newLocation, entity);
-    this.redefinition(newLocation);
-    if (newLocation == oldLocation) return; // Посмотреть эту фичу
-    Storage.delete(oldLocation, entity.uid);
-    this.redefinition(oldLocation);
-    this.drawTasks();
-  }
-
-  static redefinition(location) {
-    Storage.get(location)
-      .sort((a, b) => a.count - b.count)
-      .forEach((item, index) => {
-        item.count = index;
-        Storage.update(location, item);
-      });
   }
 
   static setPosition(dragElement, currentDroppable, oldStatus) {
@@ -109,9 +89,7 @@ export class Drawer {
       let middleY = coords.top + coords.height / 2;
       positions.push(middleY);
     });
-
     const newPos = positions.filter((top) => top < dragElementMiddleY).length;
-
     const uid = +dragElement.getAttribute('uid');
     const list = Storage.get(oldStatus);
     const entity = list.find((item) => item.uid === uid);
@@ -124,6 +102,7 @@ export class Drawer {
     newList.sort((a, b) => a.count - b.count);
     newList.splice(newPos, 0, tmp);
     newList.forEach((item, index) => (item.count = index));
-    Storage.bulk(currentDroppable.id, newList)
+    Storage.bulk(currentDroppable.id, newList);
+    this.drawTasks();
   }
 }

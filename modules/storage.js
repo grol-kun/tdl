@@ -6,9 +6,6 @@ export class Storage {
 
   static add(targetName, entity) {
     const list = this.get(targetName);
-    //console.log(entity);
-    //console.log(list);
-    //entity.count = list.length;  // >>Переделать порядковый номер!
     list.push(entity);
     localStorage.setItem(targetName, JSON.stringify(list));
     return list;
