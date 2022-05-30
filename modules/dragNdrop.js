@@ -3,7 +3,6 @@ import { Drawer } from './drawer.js';
 let isDragging = false;
 let currentDroppable = null;
 let dragElement = null;
-
 export class DragDrop {
   static onMouseMoveBound = this.onMouseMove.bind(this);
   static do(event) {
@@ -19,7 +18,9 @@ export class DragDrop {
   }
 
   static onMouseUp(event) {
-    currentDroppable.style.borderColor = '';
+    if (currentDroppable) {
+      currentDroppable.style.borderColor = '';
+    }
     Drawer.finish(dragElement, currentDroppable);
     this.finishDrag();
   }
@@ -29,8 +30,8 @@ export class DragDrop {
       return;
     }
     isDragging = false;
-    dragElement.style.top = parseInt(dragElement.style.top) + pageYOffset + 'px';
-    dragElement.style.position = 'fixed';
+    /* dragElement.style.top = parseInt(dragElement.style.top) + pageYOffset + 'px';
+    dragElement.style.position = 'fixed'; */
     document.removeEventListener('mousemove', this.onMouseMoveBound);
     dragElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
   }
