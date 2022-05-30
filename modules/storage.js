@@ -8,7 +8,7 @@ export class Storage {
     const list = this.get(targetName);
     //console.log(entity);
     //console.log(list);
-    entity.count = list.length;  // >>Переделать порядковый номер!
+    //entity.count = list.length;  // >>Переделать порядковый номер!
     list.push(entity);
     localStorage.setItem(targetName, JSON.stringify(list));
     return list;
@@ -23,6 +23,11 @@ export class Storage {
     const list = this.get(targetName);
     const targetEntityIndex = list.findIndex((item) => item.uid === entity.uid); 
     list[targetEntityIndex] = { ...entity }; 
-    localStorage.setItem(targetName, JSON.stringify(list));
+    localStorage.setItem(targetName, JSON.stringify(list)); 
   }
+
+  static bulk(targetName, list) {
+    localStorage.setItem(targetName, JSON.stringify(list)); 
+  }
+
 }

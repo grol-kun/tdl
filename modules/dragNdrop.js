@@ -100,6 +100,7 @@ export class DragDrop {
     dragElement.hidden = false;
     if (!elemBelow) return;
     let droppableBelow = elemBelow.closest('.droppable');
+    //let cardBelow = elemBelow.closest('.draggable');
     if (currentDroppable != droppableBelow) {
       if (currentDroppable) {
         this.leaveDroppable(currentDroppable);
@@ -109,5 +110,11 @@ export class DragDrop {
         this.enterDroppable(currentDroppable);
       }
     }
+  }
+
+  static getCurrentY() {
+    /* console.log(this);
+    console.log(this.shiftY); */
+    return this.shiftY;
   }
 }
