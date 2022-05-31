@@ -56,6 +56,7 @@ export class Drawer {
   }
 
   static finish(dragElement, currentDroppable) {
+    //console.log(dragElement);
     const oldStatus = dragElement.getAttribute('data-status');
     let drawn = false;
     if (!currentDroppable) {
