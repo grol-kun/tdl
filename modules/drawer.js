@@ -1,4 +1,3 @@
-import { DragDrop } from './dragNdrop.js';
 import { Storage } from './storage.js';
 
 class Task {

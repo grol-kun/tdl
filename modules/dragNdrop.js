@@ -1,49 +1,52 @@
 import { Drawer } from './drawer.js';
-
-let isDragging = false;
-let currentDroppable = null;
-let dragElement = null;
 export class DragDrop {
+  static isDragging = false;
+  static dragElement = null;
+  static currentDroppable = null;
+
   static onMouseMoveBound = this.onMouseMove.bind(this);
   static do(event) {
     this.event = event;
-    dragElement = event.target.closest('.draggable');
-    if (!dragElement) return;
-    dragElement.style.zIndex = 1000;
+    this.dragElement = event.target.closest('.draggable');
+    console.log(this.dragElement);
+    if (!this.dragElement) return;
+    this.dragElement.style.zIndex = 1000;
     event.preventDefault();
-    dragElement.ondragstart = function () {
+    this.dragElement.ondragstart = function () {
       return false;
     };
     this.startDrag(event.clientX, event.clientY);
   }
 
   static onMouseUp(event) {
-    if (currentDroppable) {
-      currentDroppable.style.borderColor = '';
+    if (this.currentDroppable) {
+      this.currentDroppable.style.borderColor = '';
     }
-    Drawer.finish(dragElement, currentDroppable);
+    Drawer.finish(this.dragElement, this.currentDroppable);
     this.finishDrag();
   }
 
   static finishDrag() {
-    if (!isDragging) {
+    if (!this.isDragging) {
       return;
     }
-    isDragging = false;
+    this.isDragging = false;
     document.removeEventListener('mousemove', this.onMouseMoveBound);
-    dragElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
+    this.dragElement.removeEventListener('mouseup', this.onMouseUp.bind(this));
+    this.dragElement = null;
+    this.currentDroppable = null;
   }
 
   static startDrag(clientX, clientY) {
-    if (isDragging) {
+    if (this.isDragging) {
       return;
     }
-    isDragging = true;
+    this.isDragging = true;
     document.addEventListener('mousemove', this.onMouseMoveBound);
-    dragElement.addEventListener('mouseup', this.onMouseUp.bind(this));
-    this.shiftX = clientX - dragElement.getBoundingClientRect().left;
-    this.shiftY = clientY - dragElement.getBoundingClientRect().top;
-    dragElement.style.position = 'fixed';
+    this.dragElement.addEventListener('mouseup', this.onMouseUp.bind(this));
+    this.shiftX = clientX - this.dragElement.getBoundingClientRect().left;
+    this.shiftY = clientY - this.dragElement.getBoundingClientRect().top+6.5;
+    this.dragElement.style.position = 'fixed';
 
     this.moveAt(clientX, clientY);
   }
@@ -51,13 +54,14 @@ export class DragDrop {
   static moveAt(clientX, clientY) {
     let newX = clientX - this.shiftX;
     let newY = clientY - this.shiftY;
-    let newBottom = newY + dragElement.offsetHeight;
+    console.log(newY);
+    let newBottom = newY + this.dragElement.offsetHeight;
     if (newBottom > document.documentElement.clientHeight) {
       let docBottom = document.documentElement.getBoundingClientRect().bottom;
       let scrollY = Math.min(docBottom - newBottom, 10);
       if (scrollY < 0) scrollY = 0;
       window.scrollBy(0, scrollY);
-      newY = Math.min(newY, document.documentElement.clientHeight - dragElement.offsetHeight);
+      newY = Math.min(newY, document.documentElement.clientHeight - this.dragElement.offsetHeight);
     }
     if (newY < 0) {
       let scrollY = Math.min(-newY, 10);
@@ -69,43 +73,42 @@ export class DragDrop {
     // ограничим newX размерами окна
     // горизонтальная прокрутка отсутствует, поэтому это не сложно:
     if (newX < 0) newX = 0;
-    if (newX > document.documentElement.clientWidth - dragElement.offsetWidth) {
-      newX = document.documentElement.clientWidth - dragElement.offsetWidth;
+    if (newX > document.documentElement.clientWidth - this.dragElement.offsetWidth) {
+      newX = document.documentElement.clientWidth - this.dragElement.offsetWidth;
     }
-    dragElement.style.left = newX + 'px';
-    dragElement.style.top = newY + 'px';
+    this.dragElement.style.left = newX + 'px';
+    this.dragElement.style.top = newY + 'px';
   }
 
-  static enterDroppable(currentDroppable) {
-    if (currentDroppable.classList.contains('bin')) {
-      dragElement.style.opacity = '0.5';
+  static enterDroppable() {
+    if (this.currentDroppable.classList.contains('bin')) {
+      this.dragElement.style.opacity = '0.5';
       return;
     }
-    if (currentDroppable.classList.contains('board')) {
-      currentDroppable.style.borderColor = 'red';
+    if (this.currentDroppable.classList.contains('board')) {
+      this.currentDroppable.style.borderColor = 'red';
     }
   }
 
-  static leaveDroppable(currentDroppable) {
-    dragElement.style.opacity = '';
-    currentDroppable.style.borderColor = '';
+  static leaveDroppable() {
+    this.dragElement.style.opacity = '';
+    this.currentDroppable.style.borderColor = '';
   }
 
   static onMouseMove(event) {
     this.moveAt(event.clientX, event.clientY);
-    dragElement.hidden = true;
+    this.dragElement.hidden = true;
     let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-    dragElement.hidden = false;
+    this.dragElement.hidden = false;
     if (!elemBelow) return;
     let droppableBelow = elemBelow.closest('.droppable');
-    //let cardBelow = elemBelow.closest('.draggable');
-    if (currentDroppable != droppableBelow) {
-      if (currentDroppable) {
-        this.leaveDroppable(currentDroppable);
+    if (this.currentDroppable != droppableBelow) {
+      if (this.currentDroppable) {
+        this.leaveDroppable();
       }
-      currentDroppable = droppableBelow;
-      if (currentDroppable) {
-        this.enterDroppable(currentDroppable);
+      this.currentDroppable = droppableBelow;
+      if (this.currentDroppable) {
+        this.enterDroppable();
       }
     }
   }
